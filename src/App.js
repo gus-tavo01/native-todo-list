@@ -1,5 +1,4 @@
 import React from 'react';
-import 'react-native-get-random-values';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { NativeBaseProvider, StatusBar } from 'native-base';
