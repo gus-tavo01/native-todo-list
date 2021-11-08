@@ -218,9 +218,6 @@ const Tasks = ({ navigation, route }) => {
   };
   // #endregion tasks handlers
 
-  console.log('# task view render');
-  console.log(currentList);
-
   return (
     <VStack alignItems="center">
       <Box>
