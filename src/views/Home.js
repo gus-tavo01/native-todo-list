@@ -38,6 +38,8 @@ const Home = ({ navigation }) => {
     // eslint-disable-next-line curly
     if (newList.name.trim().length === 0) return;
 
+    setModalOpen(false);
+
     let resultMessage;
 
     try {
@@ -52,7 +54,6 @@ const Home = ({ navigation }) => {
       resultMessage = err.message;
     }
 
-    setModalOpen(false);
     toast.show({
       description: resultMessage,
     });
