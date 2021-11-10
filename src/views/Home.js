@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ListActions from '../redux/actions/list-actions';
 
-import { Fab, AddIcon, useToast, SimpleGrid, ScrollView, Center, Text } from 'native-base';
+import { Fab, AddIcon, SimpleGrid, ScrollView, Center, Text } from 'native-base';
 
 import ListItem from '../components/ListItem';
 import ModalContainer from '../components/modals/ModalContainer';
@@ -12,11 +12,13 @@ import AddListModal from '../components/modals/AddListModal';
 import DatabaseService from '../services/database-service';
 import { StyleSheet } from 'react-native';
 
+import useAppToast from '../hooks/useAppToast';
+
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   const lists = useSelector((state) => state.lists);
   const tasks = useSelector((state) => state.tasks);
-  const toast = useToast();
+  const toast = useAppToast();
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -28,7 +30,7 @@ const Home = ({ navigation }) => {
         const result = await databaseService.getLists();
         dispatch(ListActions.setLists(result.payload));
       } catch (err) {
-        toast.show({ description: 'Cannot get lists' });
+        toast.show('Cannot get lists');
       }
     };
     fetchLists();
@@ -54,9 +56,7 @@ const Home = ({ navigation }) => {
       resultMessage = err.message;
     }
 
-    toast.show({
-      description: resultMessage,
-    });
+    toast.show(resultMessage);
   };
 
   const handleOnListPress = (id) => {

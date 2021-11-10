@@ -4,13 +4,12 @@ import {
   VStack,
   Fab,
   AddIcon,
-  Box,
   Menu,
   Pressable,
-  useToast,
   HamburgerIcon,
   Divider,
   Text,
+  FlatList,
 } from 'native-base';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +25,8 @@ import DeleteListModal from '../components/modals/DeleteListModal';
 import EditListModal from '../components/modals/EditListModal';
 import AddListModal from '../components/modals/AddListModal';
 
+import useAppToast from '../hooks/useAppToast';
+
 const initialModalState = { open: false, content: null };
 
 const Tasks = ({ navigation, route }) => {
@@ -36,7 +37,7 @@ const Tasks = ({ navigation, route }) => {
   const tasks = useSelector((store) => store.tasks);
 
   const dispatch = useDispatch();
-  const toast = useToast();
+  const toast = useAppToast();
   const databaseService = useMemo(() => new DatabaseService(), []);
 
   useEffect(() => {
@@ -85,6 +86,8 @@ const Tasks = ({ navigation, route }) => {
   const onListEdit = async (updatedList) => {
     let resultMessage;
 
+    closeModal();
+
     try {
       const result = await databaseService.updateList(listId, updatedList);
 
@@ -98,8 +101,7 @@ const Tasks = ({ navigation, route }) => {
       resultMessage = err.message;
     }
 
-    closeModal();
-    toast.show({ description: resultMessage });
+    toast.show(resultMessage);
   };
 
   const handleOnListDelete = () => {
@@ -115,14 +117,14 @@ const Tasks = ({ navigation, route }) => {
       const result = await databaseService.deleteList(listId);
 
       if (!result.errorMessage) {
-        toast.show({ description: 'List removed successfully' });
+        toast.show('List removed successfully');
         navigation.navigate('Lists');
         dispatch(setLists(result.payload));
       } else {
-        toast.show({ description: result.errorMessage });
+        toast.show(result.errorMessage);
       }
     } catch (err) {
-      toast.show({ description: err.message });
+      toast.show(err.message);
     }
   };
 
@@ -136,6 +138,8 @@ const Tasks = ({ navigation, route }) => {
   const onTaskAdd = async (newTask) => {
     if (newTask.name.trim().length === 0) return;
 
+    closeModal();
+
     let statusMessage;
 
     const { payload, errorMessage } = await databaseService.addTask(listId, newTask);
@@ -146,8 +150,7 @@ const Tasks = ({ navigation, route }) => {
       dispatch(setTasks(payload));
     }
 
-    closeModal();
-    toast.show({ description: statusMessage });
+    toast.show(statusMessage);
   };
 
   const handleOnTaskCheck = async (task, isSelected) => {
@@ -157,10 +160,10 @@ const Tasks = ({ navigation, route }) => {
       if (!errorMessage) {
         dispatch(setTasks(payload));
       } else {
-        toast.show({ description: 'Task cannot be updated' });
+        toast.show('Task cannot be updated');
       }
     } catch (err) {
-      toast.show({ description: err.message });
+      toast.show(err.message);
     }
   };
 
@@ -193,7 +196,7 @@ const Tasks = ({ navigation, route }) => {
       statusMessage = err.message;
     }
 
-    toast.show({ description: statusMessage });
+    toast.show(statusMessage);
   };
 
   const handleOnTaskDelete = async (task) => {
@@ -210,14 +213,16 @@ const Tasks = ({ navigation, route }) => {
     } catch (err) {
       statusMessage = err.message;
     }
-    toast.show({ description: statusMessage });
+    toast.show(statusMessage);
   };
   // #endregion tasks handlers
 
   return (
     <VStack alignItems="center">
-      <Box>
-        {tasks?.map((item) => (
+      <FlatList
+        data={tasks || []}
+        keyExtractor={(t) => t.id}
+        renderItem={({ item }) => (
           <TodoItem
             key={item.id}
             id={item.id}
@@ -227,8 +232,8 @@ const Tasks = ({ navigation, route }) => {
             onDelete={handleOnTaskDelete}
             onMarkAsDone={handleOnTaskCheck}
           />
-        ))}
-      </Box>
+        )}
+      />
 
       {tasks?.length === 0 && (
         <Center w={64} h={20} mt={10}>
