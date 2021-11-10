@@ -8,6 +8,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import Home from './views/Home';
 import Tasks from './views/Tasks';
+import Colors from '../constants/Colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,10 +22,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
-        <StatusBar backgroundColor="#00CED1" />
+        <StatusBar backgroundColor={Colors.statusbar} />
         <NavigationContainer initialRoute="Lists">
           <Stack.Navigator>
-            <Stack.Screen name="Lists" component={Home} />
+            <Stack.Screen name="Lists" component={Home} options={{ title: 'My lists' }} />
             <Stack.Screen name="Tasks" component={Tasks} />
           </Stack.Navigator>
         </NavigationContainer>

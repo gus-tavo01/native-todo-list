@@ -11,7 +11,7 @@ const DeleteListModal = ({ onSubmit, onCancel }) => (
       <Button variant="link" colorScheme="secondary" onPress={onCancel}>
         Cancel
       </Button>
-      <Button onPress={onSubmit} colorScheme="primary">
+      <Button onPress={onSubmit} colorScheme="light">
         Delete
       </Button>
     </Modal.Footer>

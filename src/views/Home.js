@@ -80,7 +80,12 @@ const Home = ({ navigation }) => {
         <AddListModal onSubmit={handleOnAdd} onCancel={() => setModalOpen(false)} />
       </ModalContainer>
 
-      <Fab onPress={() => setModalOpen(true)} position="absolute" icon={<AddIcon />} />
+      <Fab
+        onPress={() => setModalOpen(true)}
+        position="absolute"
+        icon={<AddIcon />}
+        colorScheme="light"
+      />
     </ScrollView>
   );
 };

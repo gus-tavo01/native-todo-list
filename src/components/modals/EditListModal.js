@@ -27,6 +27,7 @@ const EditListModal = (props) => {
             onChangeText={handleOnInputChange}
             value={inputs.name}
             placeholder="List name"
+            autoFocus
           />
         </FormControl>
       </Modal.Body>
@@ -36,7 +37,7 @@ const EditListModal = (props) => {
         </Button>
         <Button
           onPress={handleOnSubmit}
-          colorScheme="primary"
+          colorScheme="light"
           isDisabled={inputs.name.trim().length === 0}>
           Update
         </Button>

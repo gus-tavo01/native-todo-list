@@ -24,7 +24,13 @@ const AddListModal = (props) => {
       <Modal.Body>
         <FormControl>
           <FormControl.Label>Name</FormControl.Label>
-          <Input type="text" onChangeText={handleOnChange} value={inputs.name} placeholder="Name" />
+          <Input
+            type="text"
+            onChangeText={handleOnChange}
+            value={inputs.name}
+            placeholder="Name"
+            autoFocus
+          />
         </FormControl>
       </Modal.Body>
       <Modal.Footer>
@@ -32,7 +38,7 @@ const AddListModal = (props) => {
           <Button variant="link" colorScheme="secondary" onPress={onCancel}>
             Cancel
           </Button>
-          <Button onPress={handleSubmit} colorScheme="primary">
+          <Button onPress={handleSubmit} colorScheme="light">
             Add
           </Button>
         </Button.Group>

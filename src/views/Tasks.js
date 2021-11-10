@@ -55,9 +55,10 @@ const Tasks = ({ navigation, route }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: currentList.name || 'Tasks',
+      title: currentList.name.toUpperCase() || 'Tasks',
       headerRight: () => (
         <Menu
+          w={110}
           trigger={(triggerProps) => {
             return (
               <Pressable accessibilityLabel="More options menu" {...triggerProps}>
@@ -150,22 +151,17 @@ const Tasks = ({ navigation, route }) => {
   };
 
   const handleOnTaskCheck = async (task, isSelected) => {
-    let statusMessage;
-
     try {
       const update = { ...task, isDone: isSelected ? 1 : 0 };
       const { payload, errorMessage } = await databaseService.updateTask(listId, task.id, update);
       if (!errorMessage) {
-        statusMessage = `Task ${task.name} is ${isSelected ? 'done' : 'pending'}`;
         dispatch(setTasks(payload));
       } else {
-        statusMessage = 'Task cannot be updated';
+        toast.show({ description: 'Task cannot be updated' });
       }
     } catch (err) {
-      statusMessage = err.message;
+      toast.show({ description: err.message });
     }
-
-    toast.show({ description: statusMessage });
   };
 
   const handleOnTaskEdit = (task) => {
@@ -181,23 +177,23 @@ const Tasks = ({ navigation, route }) => {
     });
   };
   const onTaskEdit = async (taskId, update) => {
-    let resultMessage;
+    let statusMessage;
 
     try {
+      closeModal();
       const result = await databaseService.updateTask(listId, taskId, update);
 
       if (!result.errorMessage) {
         dispatch(setTasks(result.payload));
-        resultMessage = 'Task updated successfully';
+        statusMessage = 'Task updated successfully';
       } else {
-        resultMessage = result.errorMessage;
+        statusMessage = result.errorMessage;
       }
     } catch (err) {
-      resultMessage = err.message;
+      statusMessage = err.message;
     }
 
-    closeModal();
-    toast.show({ description: resultMessage });
+    toast.show({ description: statusMessage });
   };
 
   const handleOnTaskDelete = async (task) => {
@@ -244,7 +240,7 @@ const Tasks = ({ navigation, route }) => {
         {tasksModal.content}
       </ModalContainer>
 
-      <Fab onPress={handleOnTaskAdd} position="absolute" icon={<AddIcon />} />
+      <Fab onPress={handleOnTaskAdd} position="absolute" icon={<AddIcon />} colorScheme="light" />
     </VStack>
   );
 };

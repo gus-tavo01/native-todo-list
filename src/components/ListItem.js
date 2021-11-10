@@ -1,18 +1,23 @@
 import React, { useMemo } from 'react';
-import { Box, MoonIcon, Pressable, Progress, Text } from 'native-base';
+import { Box, CheckIcon, CircleIcon, Pressable, Progress, Text } from 'native-base';
 
 const ListItem = ({ id, name, tasks, icon, onPress }) => {
+  const handleOnPress = () => onPress(id);
+
+  const finishedTasks = useMemo(() => tasks.filter((t) => t.isDone === 1).length, [tasks]);
+
   const getIcon = () => {
-    if (!icon) return <MoonIcon size="sm" />;
+    if (!icon) {
+      if (finishedTasks === tasks.length && tasks.length > 0) {
+        return <CheckIcon size="sm" />;
+      }
+      return <CircleIcon size="sm" />;
+    }
 
     // TODO
     // handle when icon is provided
     // map given icon on a component icon
   };
-
-  const handleOnPress = () => onPress(id);
-
-  const finishedTasks = useMemo(() => tasks.filter((t) => t.isDone === 1).length, [tasks]);
 
   return (
     <Pressable onPress={handleOnPress}>
@@ -20,10 +25,10 @@ const ListItem = ({ id, name, tasks, icon, onPress }) => {
         w={160}
         h={180}
         rounded={10}
-        backgroundColor="emerald.300"
+        backgroundColor="#D3D3D3"
         p={3}
         justifyContent="space-between">
-        {getIcon()}
+        {getIcon(id)}
 
         {name?.toUpperCase()}
 
@@ -31,7 +36,7 @@ const ListItem = ({ id, name, tasks, icon, onPress }) => {
           <Text>
             Finished {finishedTasks} of {tasks.length}
           </Text>
-          <Progress mt={1} min={0} value={finishedTasks} max={tasks.length} colorScheme="primary" />
+          <Progress mt={1} min={0} value={finishedTasks} max={tasks.length} colorScheme="light" />
         </Box>
       </Box>
     </Pressable>

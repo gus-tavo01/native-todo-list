@@ -24,14 +24,14 @@ const TodoItem = (props) => {
       px={2}
       my={3}
       rounded={15}
-      backgroundColor="blue.200">
+      backgroundColor="#D3D3D3">
       <Container flexDirection="row" alignItems="center">
         <Checkbox
           value={item.isDone.toString()}
           my={3}
           mr={3}
           size="lg"
-          colorScheme="success"
+          colorScheme="light"
           rounded={20}
           isChecked={item.isDone}
           onChange={(selected) => onMarkAsDone(item, selected)}
@@ -42,7 +42,7 @@ const TodoItem = (props) => {
         </Text>
       </Container>
       <Menu
-        w="150"
+        w={110}
         trigger={(triggerProps) => {
           return (
             <Pressable accessibilityLabel="More options menu" {...triggerProps}>
