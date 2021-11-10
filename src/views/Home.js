@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ListActions from '../redux/actions/list-actions';
 
-import { Fab, AddIcon, useToast, SimpleGrid, ScrollView } from 'native-base';
+import { Fab, AddIcon, useToast, SimpleGrid, ScrollView, Center, Text } from 'native-base';
 
 import ListItem from '../components/ListItem';
 import ModalContainer from '../components/modals/ModalContainer';
@@ -64,6 +64,12 @@ const Home = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {lists.items?.length === 0 && (
+        <Center w={64} h={20} mt={10}>
+          <Text fontSize={18}>You don't have any list yet</Text>
+        </Center>
+      )}
+
       <SimpleGrid columns={2} space={5}>
         {lists.items?.map((list) => (
           <ListItem
