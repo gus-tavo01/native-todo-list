@@ -28,8 +28,9 @@ const ListItem = ({ id, name, tasks, icon, onPress }) => {
         backgroundColor="#D3D3D3"
         p={3}
         justifyContent="space-between">
-        {getIcon(id)}
-
+        <Box justifyContent="flex-end" flexDir="row">
+          {getIcon(id)}
+        </Box>
         {name?.toUpperCase()}
 
         <Box>
