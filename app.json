@@ -1,4 +1,13 @@
 {
   "name": "TodoApp",
-  "displayName": "TodoApp"
+  "displayName": "TodoApp",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "updates": {
+    "fallbackToCacheTimeout": "1500"
+  },
+  "android": {
+    "versionCode": 1,
+    "package": "com.gustavo-01.todoapp"
+  }
 }
