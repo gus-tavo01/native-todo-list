@@ -33,15 +33,13 @@ const AddListModal = (props) => {
           />
         </FormControl>
       </Modal.Body>
-      <Modal.Footer>
-        <Button.Group space={2}>
-          <Button variant="link" colorScheme="secondary" onPress={onCancel}>
-            Cancel
-          </Button>
-          <Button onPress={handleSubmit} colorScheme="light">
-            Add
-          </Button>
-        </Button.Group>
+      <Modal.Footer justifyContent="space-between">
+        <Button variant="link" colorScheme="secondary" onPress={onCancel}>
+          Cancel
+        </Button>
+        <Button onPress={handleSubmit} colorScheme="light">
+          Add
+        </Button>
       </Modal.Footer>
     </Modal.Content>
   );
