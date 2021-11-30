@@ -23,7 +23,7 @@ const AddListModal = (props) => {
       <Modal.Header>Add a new entry</Modal.Header>
       <Modal.Body>
         <FormControl>
-          <FormControl.Label>Name</FormControl.Label>
+          <FormControl.Label isRequired>Name</FormControl.Label>
           <Input
             type="text"
             onChangeText={handleOnChange}

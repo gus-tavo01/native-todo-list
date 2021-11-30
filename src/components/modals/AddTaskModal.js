@@ -33,7 +33,7 @@ const AddTaskModal = (props) => {
       <Modal.Header>Todo information</Modal.Header>
       <Modal.Body>
         <FormControl>
-          <FormControl.Label>Name</FormControl.Label>
+          <FormControl.Label isRequired>Name</FormControl.Label>
           <Input
             type="text"
             onChangeText={(v) => handleOnChange('name', v)}

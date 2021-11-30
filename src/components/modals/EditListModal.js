@@ -21,7 +21,7 @@ const EditListModal = (props) => {
       <Modal.Header>Update Information</Modal.Header>
       <Modal.Body>
         <FormControl>
-          <FormControl.Label>Name</FormControl.Label>
+          <FormControl.Label isRequired>Name</FormControl.Label>
           <Input
             type="text"
             onChangeText={handleOnInputChange}
