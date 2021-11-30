@@ -64,6 +64,7 @@ class DatabaseService {
         `CREATE TABLE IF NOT EXISTS tasks (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name VARCHAR(80),
+          description VARCHAR (500),
           isDone INTEGER DEFAULT 0,
           listId INTEGER NOT NULL,
             FOREIGN KEY (listId) REFERENCES lists (id)
@@ -139,7 +140,7 @@ class DatabaseService {
   getTasks = async (listId) => {
     try {
       const dbResult = await this.#executeQuery(
-        'SELECT id, name, isDone, listId FROM tasks WHERE listId = ?',
+        'SELECT id, name, description, isDone, listId FROM tasks WHERE listId = ?',
         [listId],
       );
       return ServiceResponse(mapRowsData(dbResult.rows));
@@ -151,8 +152,8 @@ class DatabaseService {
   addTask = async (listId, task) => {
     try {
       const queryResult = await this.#executeQuery(
-        'INSERT INTO tasks (name, listId) VALUES (?, ?)',
-        [task.name, listId],
+        'INSERT INTO tasks (name, listId, description) VALUES (?, ?, ?)',
+        [task.name, listId, task.description],
       );
       if (queryResult.insertId) {
         const { payload } = await this.getTasks(listId);
