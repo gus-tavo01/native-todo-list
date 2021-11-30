@@ -25,6 +25,7 @@ import DeleteListModal from '../components/modals/DeleteListModal';
 import EditListModal from '../components/modals/EditListModal';
 
 import AddTaskModal from '../components/modals/AddTaskModal';
+import EditTaskModal from '../components/modals/EditTaskModal';
 import TaskDetailsModal from '../components/modals/TaskDetailsModal';
 
 import useAppToast from '../hooks/useAppToast';
@@ -169,13 +170,20 @@ const Tasks = ({ navigation, route }) => {
     }
   };
 
+  const handleOnTaskPress = async (task) => {
+    setTasksModal({
+      open: true,
+      content: <TaskDetailsModal onSubmit={closeModal} task={task} />,
+    });
+  };
+
   const handleOnTaskEdit = (task) => {
     setTasksModal({
       open: true,
       content: (
-        <EditListModal
+        <EditTaskModal
           onSubmit={(newTask) => onTaskEdit(task.id, newTask)}
-          list={task}
+          task={task}
           onCancel={closeModal}
         />
       ),
@@ -217,13 +225,6 @@ const Tasks = ({ navigation, route }) => {
       statusMessage = err.message;
     }
     toast.show(statusMessage);
-  };
-
-  const handleOnTaskPress = async (task) => {
-    setTasksModal({
-      open: true,
-      content: <TaskDetailsModal onSubmit={closeModal} task={task} />,
-    });
   };
   // #endregion tasks handlers
 
