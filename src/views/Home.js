@@ -91,7 +91,7 @@ const Home = ({ navigation }) => {
         onPress={() => setModalOpen(true)}
         position="absolute"
         icon={<AddIcon />}
-        colorScheme="light"
+        colorScheme="info"
       />
     </ScrollView>
   );
