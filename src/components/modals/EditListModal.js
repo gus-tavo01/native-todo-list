@@ -37,7 +37,7 @@ const EditListModal = (props) => {
         </Button>
         <Button
           onPress={handleOnSubmit}
-          colorScheme="light"
+          colorScheme="info"
           isDisabled={inputs.name.trim().length === 0}>
           Update
         </Button>

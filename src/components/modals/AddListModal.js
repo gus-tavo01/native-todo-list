@@ -37,7 +37,7 @@ const AddListModal = (props) => {
         <Button variant="link" colorScheme="secondary" onPress={onCancel}>
           Cancel
         </Button>
-        <Button onPress={handleSubmit} colorScheme="light">
+        <Button onPress={handleSubmit} colorScheme="info">
           Add
         </Button>
       </Modal.Footer>
