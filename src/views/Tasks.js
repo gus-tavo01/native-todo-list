@@ -23,7 +23,9 @@ import TodoItem from '../components/TodoItem';
 import ModalContainer from '../components/modals/ModalContainer';
 import DeleteListModal from '../components/modals/DeleteListModal';
 import EditListModal from '../components/modals/EditListModal';
-import AddListModal from '../components/modals/AddListModal';
+
+import AddTaskModal from '../components/modals/AddTaskModal';
+import TaskDetailsModal from '../components/modals/TaskDetailsModal';
 
 import useAppToast from '../hooks/useAppToast';
 
@@ -132,7 +134,7 @@ const Tasks = ({ navigation, route }) => {
   const handleOnTaskAdd = () => {
     setTasksModal({
       open: true,
-      content: <AddListModal onSubmit={onTaskAdd} onCancel={closeModal} />,
+      content: <AddTaskModal onSubmit={onTaskAdd} onCancel={closeModal} />,
     });
   };
   const onTaskAdd = async (newTask) => {
@@ -179,6 +181,7 @@ const Tasks = ({ navigation, route }) => {
       ),
     });
   };
+
   const onTaskEdit = async (taskId, update) => {
     let statusMessage;
 
@@ -215,6 +218,13 @@ const Tasks = ({ navigation, route }) => {
     }
     toast.show(statusMessage);
   };
+
+  const handleOnTaskPress = async (task) => {
+    setTasksModal({
+      open: true,
+      content: <TaskDetailsModal onSubmit={closeModal} task={task} />,
+    });
+  };
   // #endregion tasks handlers
 
   return (
@@ -228,9 +238,11 @@ const Tasks = ({ navigation, route }) => {
             id={item.id}
             name={item.name}
             isDone={item.isDone === 1}
+            description={item.description}
             onEdit={handleOnTaskEdit}
             onDelete={handleOnTaskDelete}
             onMarkAsDone={handleOnTaskCheck}
+            onPress={handleOnTaskPress}
           />
         )}
       />
@@ -245,7 +257,7 @@ const Tasks = ({ navigation, route }) => {
         {tasksModal.content}
       </ModalContainer>
 
-      <Fab onPress={handleOnTaskAdd} position="absolute" icon={<AddIcon />} colorScheme="light" />
+      <Fab onPress={handleOnTaskAdd} position="absolute" icon={<AddIcon />} colorScheme="info" />
     </VStack>
   );
 };
