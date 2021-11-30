@@ -2,9 +2,15 @@
 
 ## Known Issues
 
-- app has too many reRenders
+- none
 
-## Pending functionality
+## Enhancements and updates
 
-- add custom icon when create/edit a list
-- set custom list color when create/edit
+- set app theme (applies for list items and todo items font and background color)
+- change app theme dark or light
+
+## Deploy app
+
+### Android
+
+- in android directory run command: ./gradlew assembleRelease
