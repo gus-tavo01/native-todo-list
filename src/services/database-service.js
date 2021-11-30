@@ -168,8 +168,8 @@ class DatabaseService {
   updateTask = async (listId, taskId, update) => {
     try {
       const dbRes = await this.#executeQuery(
-        'UPDATE tasks SET name = ?, isDone = ? WHERE id = ?;',
-        [update.name, update.isDone, taskId],
+        'UPDATE tasks SET name = ?, description = ?, isDone = ? WHERE id = ?;',
+        [update.name, update.description, update.isDone, taskId],
       );
       if (dbRes.rowsAffected > 0) {
         const { payload } = await this.getTasks(listId);
