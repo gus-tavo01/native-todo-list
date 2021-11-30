@@ -1,22 +1,19 @@
 import React, { useMemo } from 'react';
 import { Box, CheckIcon, CircleIcon, Pressable, Progress, Text } from 'native-base';
 
-const ListItem = ({ id, name, tasks, icon, onPress }) => {
+const bgColor = 'blue.300';
+const fontColor = '#000';
+
+const ListItem = ({ id, name, tasks, onPress }) => {
   const handleOnPress = () => onPress(id);
 
   const finishedTasks = useMemo(() => tasks.filter((t) => t.isDone === 1).length, [tasks]);
 
-  const getIcon = () => {
-    if (!icon) {
-      if (finishedTasks === tasks.length && tasks.length > 0) {
-        return <CheckIcon size="sm" />;
-      }
-      return <CircleIcon size="sm" />;
+  const renderIcon = () => {
+    if (finishedTasks === tasks.length && tasks.length > 0) {
+      return <CheckIcon size="sm" color="emerald.400" />;
     }
-
-    // TODO
-    // handle when icon is provided
-    // map given icon on a component icon
+    return <CircleIcon size="sm" color="gray.200" />;
   };
 
   return (
@@ -25,19 +22,20 @@ const ListItem = ({ id, name, tasks, icon, onPress }) => {
         w={160}
         h={180}
         rounded={10}
-        backgroundColor="#D3D3D3"
+        backgroundColor={bgColor}
         p={3}
         justifyContent="space-between">
         <Box justifyContent="flex-end" flexDir="row">
-          {getIcon(id)}
+          {renderIcon()}
         </Box>
-        {name?.toUpperCase()}
+
+        <Text color={fontColor}>{name?.toUpperCase()}</Text>
 
         <Box>
-          <Text>
+          <Text color={fontColor}>
             Finished {finishedTasks} of {tasks.length}
           </Text>
-          <Progress mt={1} min={0} value={finishedTasks} max={tasks.length} colorScheme="light" />
+          <Progress mt={1} min={0} value={finishedTasks} max={tasks.length} colorScheme="primary" />
         </Box>
       </Box>
     </Pressable>
